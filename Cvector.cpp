@@ -84,15 +84,18 @@ CVector0 operator+(const CVector &a, const CVector &b)
         cout << "Error! In operator+: different size of vectors!" << endl;
         exit(1);
     }
-    CVector0 c(a.size());
-    auto first = std::chrono::steady_clock::now();
-    #pragma omp parallel for
-    for (int i = 0; i < a.size(); ++i)
-        c.coords[i] = a.coords[i] + b.coords[i];
-    auto second = std::chrono::steady_clock::now();
-    auto t = std::chrono::duration_cast<std::chrono::milliseconds>(second - first);
-    std::cout << "The time of operator+: " << t.count() << " ms\n";
-    return c;
+    else
+    {
+        CVector0 c(a.size());
+        auto first = std::chrono::steady_clock::now();
+        #pragma omp parallel for
+        for (int i = 0; i < a.size(); ++i)
+            c.coords[i] = a.coords[i] + b.coords[i];
+        auto second = std::chrono::steady_clock::now();
+        auto t = std::chrono::duration_cast<std::chrono::milliseconds>(second - first);
+        std::cout << "The time of operator+: " << t.count() << " ms\n";
+        return c;
+    }
 }
 
 
@@ -115,6 +118,24 @@ CVector0 operator-(const CVector &a, const CVector &b)
     return c;
 }
 
+double operator*(const CVector &a, const CVector &b)
+{
+    if (a.size() != b.size())
+    {
+        cout << "Error! In operator-: different size of vectors!" << endl;
+        exit(1);
+    }
+    double res = 0;
+    auto first = std::chrono::steady_clock::now();
+    #pragma omp parallel for
+    for (int i = 0; i < a.size(); ++i)
+        res += a.coords[i] * b.coords[i];
+    auto second = std::chrono::steady_clock::now();
+    auto t = std::chrono::duration_cast<std::chrono::milliseconds>(second - first);
+    std::cout << "The time of operator*: " << t.count() << " ms\n";
+    return res;
+}
+
 CVector& CVector:: operator+=(const CVector &x)
 {
     *this = *this + x;
@@ -128,6 +149,7 @@ CVector& CVector:: operator-=(const CVector &x)
 }
 
 
+
 CVector:: CVector(string str, string file)
 {
     string s;
@@ -139,6 +161,8 @@ CVector:: CVector(string str, string file)
         }
     this->f = file;
 }
+
+
 
 
 CVector::  ~CVector()

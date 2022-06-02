@@ -48,16 +48,22 @@ int main() {
    
     c0 = a0 + b1;
     cout << "c0: "<<c0;
-    if ((c0[0]==2.1) && (c0[1]==3.2))
+    if ((c0[0] == 2.1) && (c0[1] == 3.2))
     cout << "Test1 Ok"<< endl;
-
+    
     
     d0 = a0 - c0;
     cout << "d0: "<<d0;
     if ((d0[0]==-1.0) && (d0[1]==-1.0))
     cout << "Test2 Ok"<< endl;
     
-    for (int i=0; i<100000;i++)
+    double sk_pr;
+    sk_pr = d0 * c0;
+    cout << "Result of operator: "<<sk_pr;
+    if (sk_pr == -1.1)
+    cout << "Test3 Ok"<< endl;
+    
+    for (int i=0; i<size_;i++)
     {
         vec_1[i] = i+(double)rand()/((double)rand()-10);
         vec_2[i] = i+(double)rand()/((double)rand()-10);
@@ -65,6 +71,9 @@ int main() {
     
     vec_3 = vec_1 + vec_2;
     vec_3 = vec_1 - vec_2;
+    
+    double sk_pr1;
+    sk_pr1 = vec_1 * vec_2;
        
     ifstream in;
     in.open("input.txt");

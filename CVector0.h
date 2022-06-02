@@ -37,4 +37,6 @@ CVector0 operator+(const CVector &, const CVector &);
 
 CVector0 operator-(const CVector &, const CVector &);
 
+double operator*(const CVector &, const CVector &);
+
 #endif /* CVector0_h */
